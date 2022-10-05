@@ -30,6 +30,10 @@ feedBackForm.form.addEventListener('input', throttle(jsonFormObj, 500));
 
 // Function that creates json localStorage object
 function jsonFormObj(e) {
+  if (!isEmpty(localStorage.getItem(STORAGE_KEY))) {
+    formData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  }
+
   // create object key and object value from form fields
   formData[e.target.name] = e.target.value;
 
@@ -56,7 +60,6 @@ function onFormSubmit(e) {
 
 function fillFormAreas() {
   const formObj = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
   // check if the form contains the data
   if (!isEmpty(formObj)) {
     // if local Storage is not empty then fill form fields
@@ -65,7 +68,7 @@ function fillFormAreas() {
     const { email, message } = formObj;
 
     // also removes undefined if one of the fields is empty
-    feedBackForm.email.value = email != undefined ? email : '';
-    feedBackForm.textArea.value = message != undefined ? message : '';
+    feedBackForm.email.value = email !== undefined ? email : '';
+    feedBackForm.textArea.value = message !== undefined ? message : '';
   }
 }
